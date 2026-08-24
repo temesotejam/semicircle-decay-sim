@@ -26,8 +26,13 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
+import sys
 
 import cadquery as cq
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from model.leg_kinematics import LegGeometry
 
@@ -184,7 +189,7 @@ def main():
             writer.writeheader()
             writer.writerows(rows)
     else:
-        writer = csv.DictWriter(__import__("sys").stdout, fieldnames=fields)
+        writer = csv.DictWriter(sys.stdout, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
 
