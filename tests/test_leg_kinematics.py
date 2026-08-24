@@ -24,6 +24,13 @@ class LegKinematicsTest(unittest.TestCase):
 
     def test_ankle_travel_over_20_degree_stop_range(self):
         self.assertAlmostEqual(self.g.ankle_y_travel_mm, 20.904119998624886, places=9)
+        self.assertAlmostEqual(self.g.ankle_travel_from_qmax_mm(-10.0), 10.440099, places=6)
+        self.assertAlmostEqual(self.g.stride_fraction_from_qmax(-10.0), 0.49942783, places=7)
+
+    def test_invert_requested_ankle_travel(self):
+        q = self.g.q_for_ankle_travel_mm(10.0)
+        self.assertAlmostEqual(q, -9.581045989013663, places=9)
+        self.assertAlmostEqual(self.g.ankle_travel_from_qmax_mm(q), 10.0, places=9)
 
     def test_hard_stop_membership(self):
         self.assertTrue(self.g.within_hard_stops(-20.0))
