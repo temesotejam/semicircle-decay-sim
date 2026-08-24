@@ -9,7 +9,7 @@ The current mechanism is best separated into four roles:
 3. **The hip hard stops** bound the maximum swing coordinate to `q in [-20, 0] deg`, therefore bounding the maximum geometric step.
 4. **Fore-aft body balance and stance geometry** become especially important after first contact, when the new foot must actually accept load and become the next stance foot.
 
-This means the reaction wheel does not need to prescribe the fore-aft leg angle directly.  It can instead control **support-transfer timing**.  If support is transferred before the swing leg reaches `q=-20 deg`, the resulting step can be shorter than the stop-to-stop maximum.
+This means the reaction wheel does not need to prescribe the fore-aft leg angle directly. It can instead control **support-transfer timing**. If support is transferred before the swing leg reaches `q=-20 deg`, the resulting step can be shorter than the stop-to-stop maximum.
 
 ## Important wording: foot alone vs rigid leg+foot assembly
 
@@ -24,7 +24,7 @@ A uniform-density STEP shape proxy gives the following CG directions from the hi
 | foot solid only | 8.515 deg |
 | whole rigid leg+foot group | **32.747 deg** |
 
-Therefore the current geometry screening supports the idea that the **whole rigid leg+foot mass distribution** can drive the passive swing toward the `q=-20 deg` stop.  It does **not** support saying that the literal foot solid alone is sufficient: with the equal-density proxy, the foot-only CG is only 8.515 deg from vertical and would not have enough gravitational potential to reach `q=-20 deg` from rest at `q=0` by itself.
+Therefore the current geometry screening supports the idea that the **whole rigid leg+foot mass distribution** can drive the passive swing toward the `q=-20 deg` stop. It does **not** support saying that the literal foot solid alone is sufficient: with the equal-density proxy, the foot-only CG is only 8.515 deg from vertical and would not have enough gravitational potential to reach `q=-20 deg` from rest at `q=0` by itself.
 
 Actual component masses must still be measured before this is treated as a physical CG result.
 
@@ -46,7 +46,7 @@ The frictionless energy boundary at which `q=-20 deg` has the same potential as 
 
 `alpha = -22.747 deg`.
 
-So in this **geometry-only proxy**, moderate fore-aft body pitch changes the swing speed but does not dominate the swing direction.  This is consistent with the working interpretation that fore-aft balance is more important for the subsequent support/fixation phase than for generating the initial swing.  This statement still needs measured leg masses and joint-friction validation.
+So in this **geometry-only proxy**, moderate fore-aft body pitch changes the swing speed but does not dominate the swing direction. This is consistent with the working interpretation that fore-aft balance is more important for the subsequent support/fixation phase than for generating the initial swing. This statement still needs measured leg masses and joint-friction validation.
 
 ## Variable geometric step from early support transfer
 
@@ -68,7 +68,7 @@ Selected intermediate values:
 
 Thus the STEP kinematics directly support the proposed variable-step mechanism: a support switch at an intermediate `q_switch` selects an intermediate geometric stride coordinate.
 
-This is ankle-center travel, not yet the final ground-contact step length.  With nonzero fore-aft foot pitch, the first floor contact can occur at a front/rear edge of the foot, so true contact-point step length must be handled separately.
+This is ankle-center travel, not yet the final ground-contact step length. With nonzero fore-aft foot pitch, the first floor contact can occur at a front/rear edge of the foot, so true contact-point step length must be handled separately.
 
 ## Ideal passive swing time scale
 
@@ -89,7 +89,7 @@ Examples:
 | -15 deg | 81.7 ms | 15.69 mm |
 | -20 deg | 95.7 ms | 20.90 mm |
 
-These times are **not physical predictions yet**.  Real hip friction, actual mass distribution, moving-hip acceleration, contact, and stop compliance can change them substantially.  The time values are used only to show that early support switching is dynamically meaningful on a sub-cycle time scale.
+These times are **not physical predictions yet**. Real hip friction, actual mass distribution, moving-hip acceleration, contact, and stop compliance can change them substantially. The time values are used only to show that early support switching is dynamically meaningful on a sub-cycle time scale.
 
 ## Reaction-wheel roll as the touchdown selector
 
@@ -108,13 +108,13 @@ For an illustrative fixed stance angle `q_stance=-20 deg`, the required roll thr
 | -17.5 deg | 18.30 mm | -2.68 deg |
 | -20 deg | 20.90 mm | **0.00 deg** |
 
-The sign is the STEP/right-hand roll convention.  Positive roll lowers the right/support side and raises the left/swing side.  To make the left swing foot touch before it reaches the stop, the body must therefore roll back toward, and in this fixed-stance example past, the opposite side earlier.
+The sign is the STEP/right-hand roll convention. Positive roll lowers the right/support side and raises the left/swing side. To make the left swing foot touch before it reaches the stop, the body must therefore roll back toward, and in this fixed-stance example past, the opposite side earlier.
 
 This is exactly the proposed reaction-wheel role: **change the roll trajectory so the swing foot regains ground contact at the desired intermediate swing angle.**
 
 ## Stance-leg state matters
 
-The touchdown roll is not a function of `q_swing` alone.  It also depends on the stance-leg angle.
+The touchdown roll is not a function of `q_swing` alone. It also depends on the stance-leg angle.
 
 At zero fore-aft body pitch:
 
@@ -147,6 +147,8 @@ For example, the geometry inversion gives approximately:
 - `L_ref = 20 mm` -> `q_ref = -19.129 deg`
 
 This makes step-length control fundamentally a **support-switch / touchdown-timing problem**, rather than a direct leg-position actuator problem.
+
+However, the final controller should not use elapsed time alone. The ideal proxy reaches `q=-10 deg` at about 65.8 ms, but real joint friction and body motion will move that timing. A robust controller should ultimately use an observed/estimated swing state `q_swing` and current stance/body state, with time only as a fallback or predictor.
 
 ## What is not yet modeled
 
