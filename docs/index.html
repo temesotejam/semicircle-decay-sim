@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reaction-Wheel Rocker Motion Explorer</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1017;--p:#121923;--line:#2a3544;--txt:#eef3f8;--mut:#94a3b8;--a:#67e8f9;--b:#a78bfa;--ok:#86efac;--warn:#fcd34d}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at top,#172033,var(--bg) 45rem);color:var(--txt)}header,main,footer{width:min(1220px,calc(100% - 28px));margin:auto}header{padding:32px 0 16px}h1{margin:0;font-size:clamp(30px,5vw,52px)}p{color:var(--mut);line-height:1.65}.tabs,.controls,.metrics,.views{display:grid;gap:10px}.tabs{grid-template-columns:repeat(4,1fr);margin:14px 0}.tabs button,.controls button,select,input{font:inherit}.tabs button,.controls button,select{border:1px solid var(--line);background:#18202b;color:var(--txt);padding:10px;border-radius:10px;cursor:pointer}.tabs button.active,.controls button.primary{background:linear-gradient(135deg,#164e63,#312e81)}.controls{grid-template-columns:auto auto auto 1fr 1fr;align-items:end;background:var(--p);border:1px solid var(--line);border-radius:14px;padding:12px}.controls label{font-size:12px;color:var(--mut)}input[type=range]{width:100%}.metrics{grid-template-columns:repeat(5,1fr);margin:10px 0}.metric{background:#0f151d;border:1px solid #253141;border-radius:12px;padding:11px}.metric small{display:block;color:var(--mut)}.metric b{font-size:19px}.views{grid-template-columns:1fr 1fr}.card{background:var(--p);border:1px solid var(--line);border-radius:15px;padding:12px}.card h2{font-size:17px;margin:0 0 8px}canvas{width:100%;aspect-ratio:16/10;background:#0c121a;border:1px solid #263242;border-radius:10px;display:block}.note{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#10161e;color:var(--mut);font-size:12px}.status{color:var(--a)}footer{padding:20px 0 32px;color:var(--mut);font-size:12px}@media(max-width:850px){.tabs{grid-template-columns:1fr 1fr}.controls{grid-template-columns:1fr 1fr}.views{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="status">semicircle-decay-sim / current mechanism geometry</div><h1>機構動作エクスプローラ</h1><p>STEPで確認した股関節X軸、20°ハードストップ、足首中心の前後移動、初回床接触境界を可視化します。未同定の摩擦・反発・接地後荷重移動は入れていません。</p></header>
+<main>
+<div class="tabs">
+<button class="tab active" data-mode="passive">① 遊脚単独</button><button class="tab" data-mode="roll">② 左右ロール</button><button class="tab" data-mode="full">③ 最大歩幅</button><button class="tab" data-mode="early">④ 早期支持切替</button>
+</div>
+<div class="controls">
+<button id="play" class="primary">▶ 再生</button><button id="reset">↺ リセット</button>
+<label>速度<select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+<label>目標足首移動 <b id="stepText">10.0 mm</b><input id="step" type="range" min="1" max="20.5" value="10" step="0.1"></label>
+<label>支持脚角 <b id="stanceText">-20.0°</b><input id="stance" type="range" min="-20" max="0" value="-20" step="0.5"></label>
+</div>
+<div class="metrics" id="metrics"></div>
+<div class="views"><section class="card"><h2>側面 YZ — 脚の前後スイング</h2><canvas id="side"></canvas></section><section class="card"><h2>正面 XZ — 本体ロールと接地切替</h2><canvas id="front"></canvas></section></div>
+<div class="note"><b>見方:</b> ③は遊脚をq=-20°ストッパまで振り切る最大歩幅。④はストッパ前のqでRWによりロールを戻して床へ触れさせる現在の制御仮説です。「床へ触れられる」と「安定した支持脚になる」はまだ別問題です。</div>
+</main>
+<footer>Geometry source: Part Studio 1.1.step — WIP visualization only</footer>
+<script>
+(()=>{
+const G={hy:0,hz:-12,by:44.167295593,bz:-37.5,ay:11.227384539,az:-71.139867217,cgy:21.882791753,cgz:-46.024124896,max:20.90412};
+const qGrid=[0,-2.5,-5,-7.5,-10,-12.5,-15,-17.5,-20], sGrid=[-20,-15,-10,-5,0];
+const rollMap={"-20":[-17.072720785,-15.218287020,-13.311679411,-11.354109100,-9.342953356,-7.266372834,-5.087515747,-2.677312440,0],"-15":[-15.806840710,-13.781275122,-11.653625674,-9.394503779,-6.933883801,-4.060042178,0,3.412976057,5.087515747],"-10":[-13.548224874,-11.134438604,-8.434835157,-5.173491182,0,4.642433123,6.933883801,8.389721215,9.342953356],"-5":[-9.694828020,-6.111354967,0,5.661369074,8.434835157,10.304509994,11.653625674,12.631214147,13.311679411],"0":[0,6.527022708,9.694828020,11.893973445,13.548224874,14.824062309,15.806840710,16.546191622,17.072720785]};
+const passive=[[0,0],[32.273458,-2.5],[45.915031,-5],[56.584125,-7.5],[65.760371,-10],[74.017255,-12.5],[81.650508,-15],[88.837920,-17.5],[95.697752,-20]];
+const $=id=>document.getElementById(id);let mode='passive',playing=false,p=0,last=performance.now();
+function rot(y,z,q){let a=q*Math.PI/180,Y=y-G.hy,Z=z-G.hz;return[G.hy+Y*Math.cos(a)-Z*Math.sin(a),G.hz+Y*Math.sin(a)+Z*Math.cos(a)]}
+function travel(q){return Math.max(0,G.ay-rot(G.ay,G.az,q)[0])}
+function qForTravel(mm){let lo=-20,hi=0;for(let i=0;i<60;i++){let m=(lo+hi)/2;if(travel(m)>mm)lo=m;else hi=m}return(lo+hi)/2}
+function qAt(ms){for(let i=0;i<passive.length-1;i++){let a=passive[i],b=passive[i+1];if(ms>=a[0]&&ms<=b[0]){let u=(ms-a[0])/(b[0]-a[0]);return a[1]+u*(b[1]-a[1])}}return ms<=0?0:-20}
+function rootAt(qs,qw){qs=Math.max(-20,Math.min(0,qs));qw=Math.max(-20,Math.min(0,qw));let si=0;while(si<sGrid.length-2&&qs>sGrid[si+1])si++;let qi=0;while(qi<qGrid.length-2&&qw<qGrid[qi+1])qi++;let s0=sGrid[si],s1=sGrid[si+1],q0=qGrid[qi],q1=qGrid[qi+1],a=(qs-s0)/(s1-s0||1),b=(qw-q0)/(q1-q0||1);let r0=rollMap[s0][qi]+b*(rollMap[s0][qi+1]-rollMap[s0][qi]),r1=rollMap[s1][qi]+b*(rollMap[s1][qi+1]-rollMap[s1][qi]);return r0+a*(r1-r0)}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2}function lerp(a,b,u){return a+(b-a)*u}
+function state(){let qs=+$('stance').value,target=+$('step').value,qt=mode==='full'?-20:qForTravel(target),td=rootAt(qs,qt),q=0,r=0,c=false,ms=null;if(mode==='passive'){ms=Math.min(95.697752,p/.8*95.697752);q=qAt(ms);c=p>.8}else if(mode==='roll'){r=14*Math.sin(p*2*Math.PI);q=qs;c=true}else{if(p<.18){r=lerp(0,12,ease(p/.18))}else if(p<.62){let u=(p-.18)/.44;ms=u*(qt/-20)*95.697752;q=lerp(0,qt,u);r=12}else if(p<.84){q=qt;r=lerp(12,td,ease((p-.62)/.22))}else{q=qt;r=td;c=true}}return{qs,qt,td,q,r,c,ms}}
+function fit(cv){let d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(cv.width!==w*d||cv.height!==h*d){cv.width=w*d;cv.height=h*d}let x=cv.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,w,h);return[x,w,h]}
+function line(x,a,b,w=2,col='#cbd5e1'){x.strokeStyle=col;x.lineWidth=w;x.beginPath();x.moveTo(...a);x.lineTo(...b);x.stroke()}function dot(x,a,r,col){x.fillStyle=col;x.beginPath();x.arc(a[0],a[1],r,0,Math.PI*2);x.fill()}function txt(x,s,a,col='#94a3b8'){x.fillStyle=col;x.font='12px system-ui';x.fillText(s,a[0],a[1])}
+function drawSide(st){let[x,w,h]=fit($('side')),sc=Math.min(w/160,h/130),ox=w*.46,oz=h*.19,map=([y,z])=>[ox+y*sc,oz+(-z-5)*sc],H=map([0,-12]),B=map(rot(G.by,G.bz,st.q)),A=map(rot(G.ay,G.az,st.q)),C=map(rot(G.cgy,G.cgz,st.q));line(x,[20,h-34],[w-20,h-34],2,'#475569');line(x,H,B,10,'#60a5fa');line(x,B,A,10,'#60a5fa');dot(x,H,7,'#eef3f8');dot(x,C,6,'#fcd34d');let aa=st.q*Math.PI/180,half=28,dy=Math.cos(aa)*half,dz=Math.sin(aa)*half,ap=rot(G.ay,G.az,st.q);line(x,map([ap[0]-dy,ap[1]-dz]),map([ap[0]+dy,ap[1]+dz]),10,st.c?'#86efac':'#a78bfa');txt(x,`q=${st.q.toFixed(2)}°`,[16,22],'#67e8f9');txt(x,`移動=${travel(st.q).toFixed(2)} mm`,[16,40])}
+function drawFront(st){let[x,w,h]=fit($('front')),cx=w/2,cy=h*.57,sc=Math.min(w/160,h/135),a=st.r*Math.PI/180,R=([X,Z])=>[cx+(X*Math.cos(a)-Z*Math.sin(a))*sc,cy-(X*Math.sin(a)+Z*Math.cos(a))*sc],ground=h-35;line(x,[20,ground],[w-20,ground],2,'#475569');let poly=[[-31,45],[31,45],[31,-18],[-31,-18]].map(R);x.fillStyle='#263244';x.beginPath();poly.forEach((v,i)=>i?x.lineTo(...v):x.moveTo(...v));x.closePath();x.fill();[-25,25].forEach(X=>{line(x,R([X,-5]),R([X,-60]),8,'#60a5fa');let f=R([X,-72]);line(x,[f[0]-18*sc,f[1]],[f[0]+18*sc,f[1]],8,'#a78bfa')});let bound=rootAt(st.qs,st.q),reachable=st.r<=bound+.15;txt(x,`roll=${st.r.toFixed(2)}°`,[16,22],'#67e8f9');txt(x,`接地境界=${bound.toFixed(2)}°`,[16,40]);txt(x,reachable?'遊脚: 床へ到達可能':'遊脚: 浮上側',[16,58],reachable?'#86efac':'#fcd34d')}
+function ui(st){$('stepText').textContent=(+$('step').value).toFixed(1)+' mm';$('stanceText').textContent=(+$('stance').value).toFixed(1)+'°';let arr=[['遊脚角',st.q.toFixed(2)+'°'],['本体ロール',st.r.toFixed(2)+'°'],['足首中心移動',travel(st.q).toFixed(2)+' mm'],['接地境界',rootAt(st.qs,st.q).toFixed(2)+'°'],['proxy時間',st.ms==null?'—':st.ms.toFixed(1)+' ms']];$('metrics').innerHTML=arr.map(v=>`<div class=metric><small>${v[0]}</small><b>${v[1]}</b></div>`).join('');$('step').disabled=mode!=='early';$('stance').disabled=!(mode==='early'||mode==='full')}
+function frame(now){let dt=(now-last)/1000;last=now;if(playing){p+=dt*(+$('speed').value)/3.8;if(p>=1)p=0}let st=state();drawSide(st);drawFront(st);ui(st);requestAnimationFrame(frame)}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;p=0});$('play').onclick=()=>{playing=!playing;$('play').textContent=playing?'❚❚ 一時停止':'▶ 再生'};$('reset').onclick=()=>{p=0;playing=false;$('play').textContent='▶ 再生'};requestAnimationFrame(frame)
+})();
+</script>
+</body></html>
