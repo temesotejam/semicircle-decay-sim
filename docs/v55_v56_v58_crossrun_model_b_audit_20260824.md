@@ -37,18 +37,21 @@ py -m analysis.audit_crossrun_qprobe_prestate `
   --out-dir audit/replay
 ```
 
-## Fixed-inertia height transfer
+## Fixed direction-conditioned J_eff,fit transfer
 
-The V61 arrival-side inertias are fixed before fitting height:
+The V61 arrival-side direction-conditioned fitted effective inertias (`J_eff,fit`)
+are fixed before fitting Model-B height:
 
 ```text
 J(-1 arrival) = 0.928e-3 kg m^2
 J(+1 arrival) = 0.795e-3 kg m^2
 ```
 
-Only the STEP Model-B height is varied for the fixed-inertia result.
+Only the STEP Model-B operational effective height `h_eff` is varied for this
+fixed-`J_eff,fit` result. It is not treated as a direct physical CG-height
+measurement.
 
-| Model-B height | RMSE (deg/s) | bias (deg/s) |
+| Model-B h_eff | RMSE (deg/s) | bias (deg/s) |
 |---|---:|---:|
 | 120.000 mm | 7.373 | +6.175 |
 | 128.000 mm (standard) | 3.587 | -1.334 |
@@ -60,8 +63,8 @@ The per-series optima are 127.022 mm (V55), 126.019 mm (V56), and 127.666 mm
 population standard deviation 1.229 mm, and range 125.176--128.728 mm.
 
 Leave-one-run-out fits remain tightly grouped at 126.584--127.131 mm.  Their
-held-run RMSE range is 2.759--4.268 deg/s.  This supports using a rounded
-128 mm operating standard, while retaining the uncertainty rather than
+held-run RMSE range is 2.759--4.268 deg/s. This supports using a rounded
+`h_eff=128 mm` operating standard, while retaining the uncertainty rather than
 claiming an exact physical CG value.
 
 ## Model A/B comparison
@@ -82,8 +85,10 @@ V61 inertias used in the transfer calculation.
 
 ## Decision and physical verification
 
-`RockerGeometry()` now defaults to **128 mm for Model B**.  Historical Model-A
-comparisons explicitly pass 120 mm, so the definitions cannot silently mix.
+`RockerGeometry()` now defaults to **`h_eff=128 mm` for Model B**. Historical
+Model-A comparisons explicitly pass 120 mm, so the definitions cannot silently
+mix. This is an operational effective-height parameter, not a claim that the
+physical CG height was measured as 128 mm.
 This change does not alter the fixed-Q gate, Q schedule, motor command, or
 control implementation.
 

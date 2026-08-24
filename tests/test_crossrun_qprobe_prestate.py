@@ -5,7 +5,7 @@ from pathlib import Path
 
 from analysis.audit_crossrun_qprobe_prestate import (
     Event,
-    FIXED_V61_J_BY_ARRIVAL_SIDE,
+    FIXED_V61_DIRECTION_CONDITIONED_J_EFF_FIT_BY_ARRIVAL_SIDE,
     fixed_inertia_summary,
     fit_height_m,
     flexible_model_summary,
@@ -44,7 +44,10 @@ def test_published_crossrun_height_audit_regression() -> None:
         "V56_run1", "V56_run2", "V56_run3",
         "V58_run1", "V58_run2", "V58_run3",
     }
-    assert FIXED_V61_J_BY_ARRIVAL_SIDE == {-1: 0.928e-3, +1: 0.795e-3}
+    assert FIXED_V61_DIRECTION_CONDITIONED_J_EFF_FIT_BY_ARRIVAL_SIDE == {
+        -1: 0.928e-3,
+        +1: 0.795e-3,
+    }
 
     optimum = fit_height_m(events)
     assert abs(optimum - 0.1269323693) < 1e-8

@@ -4,10 +4,11 @@
   "n_events": 54,
   "n_runs": 9,
   "mass_kg": 0.1997,
-  "fixed_v61_inertia_by_arrival_side_kg_m2": {
+  "fixed_v61_direction_conditioned_J_eff_fit_by_arrival_side_kg_m2": {
     "-1": 0.000928,
     "1": 0.000795
   },
+  "model_b_parameter_interpretation": "h_eff is a Model-B operational effective height; J_eff_fit is a direction-conditioned fitted effective inertia. Neither is a direct physical CG-height or rigid-body inertia measurement.",
   "fixed_height_results": {
     "historical_h120": {
       "height_m": 0.12,
@@ -184,7 +185,7 @@
       "fit_height_m": 0.12692530919024375
     }
   },
-  "eventwise_model_b_effective_inertia_h128345": {
+  "eventwise_model_b_implied_J_eff_h_eff128345": {
     "height_m": 0.128345,
     "n_events": 54,
     "mean_kg_m2": 0.000815375069162909,
@@ -200,13 +201,13 @@
       "by_arrival_side": {
         "-1": {
           "n_events": 27,
-          "J_eff_kg_m2": 0.0007868552281324671,
+          "J_eff_fit_kg_m2": 0.0007868552281324671,
           "rmse_dps": 4.75587417105863,
           "bias_dps": -0.4881620621173118
         },
         "1": {
           "n_events": 27,
-          "J_eff_kg_m2": 0.0007770278682800416,
+          "J_eff_fit_kg_m2": 0.0007770278682800416,
           "rmse_dps": 3.4665350074663457,
           "bias_dps": -0.29536830453091084
         }
@@ -220,13 +221,13 @@
       "by_arrival_side": {
         "-1": {
           "n_events": 27,
-          "J_eff_kg_m2": 0.0008246925258526319,
+          "J_eff_fit_kg_m2": 0.0008246925258526319,
           "rmse_dps": 3.0129935540652277,
           "bias_dps": -0.12218998370232725
         },
         "1": {
           "n_events": 27,
-          "J_eff_kg_m2": 0.0008065935680403658,
+          "J_eff_fit_kg_m2": 0.0008065935680403658,
           "rmse_dps": 2.15694823506407,
           "bias_dps": -0.049230879975702635
         }

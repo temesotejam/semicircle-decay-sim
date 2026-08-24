@@ -11,7 +11,8 @@
       "radius_m": 0.15,
       "inner_edge_x_m": 0.005,
       "outer_edge_x_m": 0.045,
-      "cg_height_upright_m": 0.128,
+      "h_eff_m": 0.128,
+      "h_eff_interpretation": "Model-B operational effective height; not a direct physical CG-height measurement",
       "theta_inner_deg": 1.9102131717099304,
       "theta_outer_deg": 17.457603123722095
     }
@@ -19,13 +20,13 @@
   "model_a_complete_circle_cross_rate": {
     "-1": {
       "n": 6,
-      "J_eff_kg_m2": 0.0008684536765624358,
+      "J_eff_fit_kg_m2": 0.0008684536765624358,
       "rmse_dps": 8.176257713749282,
       "loocv_rmse_dps": 10.060462814535644
     },
     "1": {
       "n": 5,
-      "J_eff_kg_m2": 0.0012346511762053774,
+      "J_eff_fit_kg_m2": 0.0012346511762053774,
       "rmse_dps": 4.847623336622382,
       "loocv_rmse_dps": 6.508915225628664
     },
@@ -35,13 +36,13 @@
   "model_b_step_geometry_cross_rate": {
     "-1": {
       "n": 6,
-      "J_eff_kg_m2": 0.0008386823640724713,
+      "J_eff_fit_kg_m2": 0.0008386823640724713,
       "rmse_dps": 2.9080701575223795,
       "loocv_rmse_dps": 3.4744927662182867
     },
     "1": {
       "n": 5,
-      "J_eff_kg_m2": 0.0011215652653276443,
+      "J_eff_fit_kg_m2": 0.0011215652653276443,
       "rmse_dps": 2.293848032269678,
       "loocv_rmse_dps": 2.8731511405894588
     },

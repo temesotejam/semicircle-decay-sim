@@ -328,7 +328,7 @@ def model_summary(
         ]
         out[str(side)] = {
             "n": len(events),
-            "J_eff_kg_m2": j,
+            "J_eff_fit_kg_m2": j,
             "rmse_dps": rmse(errs),
             "loocv_rmse_dps": loocv_cross_rmse(events, potential_fn),
         }
@@ -386,8 +386,8 @@ def write_event_predictions(
         w.writeheader()
         for e in events:
             side_key = str(e.prev_peak_side)
-            ja = model_a[side_key]["J_eff_kg_m2"]
-            jb = model_b[side_key]["J_eff_kg_m2"]
+            ja = model_a[side_key]["J_eff_fit_kg_m2"]
+            jb = model_b[side_key]["J_eff_fit_kg_m2"]
             pa = predict_cross_rate_dps(e, ja, ua)
             pb = predict_cross_rate_dps(e, jb, ub)
 
@@ -465,7 +465,10 @@ def main() -> None:
                 "radius_m": geom_b.radius_m,
                 "inner_edge_x_m": geom_b.inner_edge_x_m,
                 "outer_edge_x_m": geom_b.outer_edge_x_m,
-                "cg_height_upright_m": geom_b.cg_height_upright_m,
+                "h_eff_m": geom_b.cg_height_upright_m,
+                "h_eff_interpretation": (
+                    "Model-B operational effective height; not a direct physical CG-height measurement"
+                ),
                 "theta_inner_deg": degrees(geom_b.theta_inner_rad),
                 "theta_outer_deg": degrees(geom_b.theta_outer_rad),
             },

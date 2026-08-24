@@ -21,7 +21,10 @@ from model.rocker_geometry import RockerGeometry
 
 
 MASS_KG = 0.1997
-FIXED_V61_J_BY_ARRIVAL_SIDE = {-1: 0.928e-3, +1: 0.795e-3}
+FIXED_V61_DIRECTION_CONDITIONED_J_EFF_FIT_BY_ARRIVAL_SIDE = {
+    -1: 0.928e-3,
+    +1: 0.795e-3,
+}
 HISTORICAL_MODEL_A_HEIGHT_M = 0.120
 STANDARD_MODEL_B_HEIGHT_M = 0.128
 
@@ -180,7 +183,14 @@ def rmse(values: list[float]) -> float:
 
 
 def fixed_inertia_residuals(events: list[Event], height_m: float) -> list[float]:
-    return [residual_dps(e, height_m, FIXED_V61_J_BY_ARRIVAL_SIDE[e.arrival_side]) for e in events]
+    return [
+        residual_dps(
+            e,
+            height_m,
+            FIXED_V61_DIRECTION_CONDITIONED_J_EFF_FIT_BY_ARRIVAL_SIDE[e.arrival_side],
+        )
+        for e in events
+    ]
 
 
 def fixed_inertia_summary(events: list[Event], height_m: float) -> dict[str, float | int]:
@@ -265,7 +275,7 @@ def flexible_model_summary(
         all_errors.extend(errors)
         by_side[str(side)] = {
             "n_events": len(side_events),
-            "J_eff_kg_m2": inertia,
+            "J_eff_fit_kg_m2": inertia,
             "rmse_dps": rmse(errors),
             "bias_dps": statistics.fmean(errors),
         }
@@ -328,7 +338,7 @@ def write_predictions(path: Path, events: list[Event], fitted_height_m: float) -
         writer.writeheader()
         for event in events:
             row = asdict(event)
-            inertia = FIXED_V61_J_BY_ARRIVAL_SIDE[event.arrival_side]
+            inertia = FIXED_V61_DIRECTION_CONDITIONED_J_EFF_FIT_BY_ARRIVAL_SIDE[event.arrival_side]
             row["fixed_j_kg_m2"] = inertia
             for name, height in (
                 ("h120", HISTORICAL_MODEL_A_HEIGHT_M),
@@ -408,13 +418,20 @@ def main() -> None:
         "n_events": len(events),
         "n_runs": len({event.run_id for event in events}),
         "mass_kg": MASS_KG,
-        "fixed_v61_inertia_by_arrival_side_kg_m2": FIXED_V61_J_BY_ARRIVAL_SIDE,
+        "fixed_v61_direction_conditioned_J_eff_fit_by_arrival_side_kg_m2": (
+            FIXED_V61_DIRECTION_CONDITIONED_J_EFF_FIT_BY_ARRIVAL_SIDE
+        ),
+        "model_b_parameter_interpretation": (
+            "h_eff is a Model-B operational effective height; J_eff_fit is a "
+            "direction-conditioned fitted effective inertia. Neither is a direct "
+            "physical CG-height or rigid-body inertia measurement."
+        ),
         "fixed_height_results": fixed_height_results,
         "height_fit_by_series": series_fits,
         "height_fit_by_run": run_fits,
         "height_fit_by_run_distribution": height_distribution(run_fits),
         "leave_one_run_out_fixed_j": leave_one_run_out(events),
-        "eventwise_model_b_effective_inertia_h128345": event_effective_inertias(
+        "eventwise_model_b_implied_J_eff_h_eff128345": event_effective_inertias(
             events, args.comparison_model_b_height_m),
         "flexible_model_comparison": {
             "model_a_complete_circle_h120": flexible_a,
