@@ -1,6 +1,9 @@
 import unittest
 
-from model.support_transfer import SupportTransferKinematics
+from model.support_transfer import (
+    SupportTransferKinematics,
+    UniformDensitySupportTransferProxy,
+)
 
 
 class SupportTransferKinematicsTest(unittest.TestCase):
@@ -35,6 +38,28 @@ class SupportTransferKinematicsTest(unittest.TestCase):
         self.assertAlmostEqual(self.k.settle_progress(-10.0, -10.0, 0.0), 0.0)
         self.assertAlmostEqual(self.k.settle_progress(-10.0, -5.0, 0.0), 0.5)
         self.assertAlmostEqual(self.k.settle_progress(-10.0, 0.0, 0.0), 1.0)
+
+
+class UniformDensitySupportTransferProxyTest(unittest.TestCase):
+    def setUp(self):
+        self.p = UniformDensitySupportTransferProxy()
+
+    def test_ten_degree_contact_is_downhill_toward_flat_at_zero_pitch(self):
+        self.assertLess(self.p.energy_drop_to_settle_mj(-10.0, 0.0), -9.0)
+
+    def test_reference_ten_degree_settle_time_scale(self):
+        r = self.p.simulate_frictionless_settle(-10.0, 0.0)
+        self.assertTrue(r["flat_reachable"])
+        self.assertAlmostEqual(r["q_settle_deg"], 0.0)
+        self.assertAlmostEqual(r["time_ms"], 105.36, delta=0.5)
+        self.assertAlmostEqual(r["preimpact_qdot_dps"], 207.4, delta=1.0)
+
+    def test_negative_pitch_reaches_qmax_but_remains_edge_pitched(self):
+        r = self.p.simulate_frictionless_settle(-10.0, -5.0)
+        self.assertFalse(r["flat_reachable"])
+        self.assertAlmostEqual(r["q_settle_deg"], 0.0)
+        self.assertAlmostEqual(r["residual_foot_pitch_deg"], -5.0)
+        self.assertLess(r["energy_drop_mj"], 0.0)
 
 
 if __name__ == "__main__":
