@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - mechanism-kinematics-audit-v1
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
