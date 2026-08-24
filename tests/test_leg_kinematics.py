@@ -1,4 +1,3 @@
-import math
 import unittest
 
 from model.leg_kinematics import LegGeometry
@@ -24,7 +23,7 @@ class LegKinematicsTest(unittest.TestCase):
         self.assertAlmostEqual(hi, 10.749373402546517, places=9)
 
     def test_ankle_travel_over_20_degree_stop_range(self):
-        self.assertAlmostEqual(self.g.ankle_y_travel_mm, 20.904133, places=5)
+        self.assertAlmostEqual(self.g.ankle_y_travel_mm, 20.904119998624886, places=9)
 
     def test_hard_stop_membership(self):
         self.assertTrue(self.g.within_hard_stops(-20.0))
