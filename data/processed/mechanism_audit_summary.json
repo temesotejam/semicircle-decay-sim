@@ -1,0 +1,68 @@
+{
+  "source_step": {
+    "name": "Part Studio 1.1.step",
+    "sha256": "e268a25352145499ac5eb2602f635f547d3d6581199b257ca2c1f72aba44f4c8",
+    "solid_count": 10
+  },
+  "coordinate_convention": {
+    "X": "lateral",
+    "Y": "fore_aft_sign_not_yet_mapped_to_physical_forward",
+    "Z": "vertical"
+  },
+  "rigid_groups": {
+    "body_collision_group": [1, 2, 3, 4],
+    "left_leg_plus_foot": [0, 6, 7],
+    "right_leg_plus_foot": [8, 5, 9]
+  },
+  "joint_semantics_confirmed_from_real_assembly": {
+    "hip": "revolute",
+    "upper_lower_connection": "fixed",
+    "ankle": "fixed"
+  },
+  "hip_axis": {
+    "direction": [1.0, 0.0, 0.0],
+    "y_mm": 0.0,
+    "z_mm": -12.0
+  },
+  "fixed_connection_reference_axes_yz_mm": {
+    "upper_lower_left": [44.1672955930064, -37.5],
+    "upper_lower_right": [44.1672955930064, -37.5],
+    "ankle_left": [11.2273845388904, -71.1398672165212],
+    "ankle_right": [11.2273845388904, -71.1398672165212]
+  },
+  "cad_hard_stop_limits_deg_relative_to_step_pose": {
+    "left_raw": [-20.0000135919, 0.0000152588],
+    "right_raw": [-20.0000076294, 0.0000152588],
+    "recommended_rounded_model_limits": [-20.0, 0.0]
+  },
+  "leg_reference_geometry": {
+    "hip_to_fixed_bend_mm": 51.0,
+    "fixed_bend_to_ankle_mm": 47.081614316,
+    "hip_to_ankle_radius_mm": 60.19616315,
+    "cad_pose_leg_angle_from_down_vertical_deg": 10.7493734,
+    "angle_range_from_down_vertical_deg": [-9.2506402, 10.7493887],
+    "ankle_y_at_qmin_mm": -9.6767496,
+    "ankle_y_at_qmax_mm": 11.2274003,
+    "ankle_y_travel_mm": 20.9041498
+  },
+  "left_right_leg_collision": {
+    "x_gap_mm_at_all_q": 10.0,
+    "reason": "Rotation about X preserves X coordinates. The left rigid group ends at X=-5 mm and the right begins at X=+5 mm, so the two leg+foot rigid groups cannot geometrically intersect."
+  },
+  "floor_reference": {
+    "cad_pose_ground_z_mm": -92.96563051,
+    "warning": "The fixed-body floor gap is diagnostic only. Walking foot-ground contact must solve body roll/translation and foot-ground nonpenetration together."
+  },
+  "stop_penetration_probes": {
+    "above_qmax_left": {
+      "probe_q_deg": 0.1000153,
+      "penetration_volume_mm3": 0.0755576,
+      "centroid_mm": [-48.5, 7.0181, -6.8108]
+    },
+    "below_qmin_left": {
+      "probe_q_deg": -20.1000136,
+      "penetration_volume_mm3": 0.1578821,
+      "centroid_mm": [-48.5, -3.2092, -20.6274]
+    }
+  }
+}
