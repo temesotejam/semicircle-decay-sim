@@ -24,7 +24,7 @@ class RockerGeometry:
     radius_m: float = 0.150
     inner_edge_x_m: float = 0.005
     outer_edge_x_m: float = 0.045
-    cg_height_upright_m: float = 0.120
+    cg_height_upright_m: float = 0.128
 
     @property
     def center_height_upright_m(self) -> float:
@@ -35,7 +35,8 @@ class RockerGeometry:
     def cg_below_circle_center_m(self) -> float:
         """Vertical circle-center to CG distance inferred from measured H.
 
-        This uses measured upright CG height rather than CAD mass properties.
+        The default is the externally validated Model-B dynamic parameter;
+        pass a height explicitly for historical Model-A comparisons.
         """
         return self.center_height_upright_m - self.cg_height_upright_m
 

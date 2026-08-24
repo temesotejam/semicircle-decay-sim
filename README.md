@@ -1,5 +1,10 @@
 # semicircle-decay-sim
 
+> 2026-08-24 update: Model B uses a 128 mm external dynamic standard.  The
+> reproducible 9-run/54-state transfer audit is in
+> `docs/v55_v56_v58_crossrun_model_b_audit_20260824.md`; the required
+> motor-free physical validation protocol is in `docs/low_amplitude_passive_validation_protocol.md`.
+
 リアクションホイールを搭載した左右ロッキング機体について、実機の自由減衰と足裏形状を物理モデルで比較するためのリポジトリです。
 
 ## 目的

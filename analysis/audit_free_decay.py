@@ -351,7 +351,8 @@ def model_summary(
 def write_event_predictions(
     path: Path,
     events: list[Event],
-    geom: RockerGeometry,
+    geom_a: RockerGeometry,
+    geom_b: RockerGeometry,
     mass_kg: float,
     selected_maps: dict[int, LinearMap],
     model_a: dict[str, object],
@@ -375,10 +376,10 @@ def write_event_predictions(
     ]
 
     def ua(angle_deg: float) -> float:
-        return geom.complete_circle_potential_delta_j(radians(angle_deg), mass_kg)
+        return geom_a.complete_circle_potential_delta_j(radians(angle_deg), mass_kg)
 
     def ub(angle_deg: float) -> float:
-        return geom.potential_delta_j(radians(angle_deg), mass_kg)
+        return geom_b.potential_delta_j(radians(angle_deg), mass_kg)
 
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields)
@@ -411,7 +412,7 @@ def write_event_predictions(
                     "prev_peak_deg": e.prev_peak_deg,
                     "zero_cross_rate_dps": e.zero_cross_rate_dps,
                     "next_peak_deg": "" if e.next_peak_deg is None else e.next_peak_deg,
-                    "contact_mode_geom": geom.contact_mode(radians(e.prev_peak_deg)),
+                    "contact_mode_geom": geom_b.contact_mode(radians(e.prev_peak_deg)),
                     "model_a_cross_pred_dps": pa,
                     "model_a_cross_residual_dps": pa - abs(e.zero_cross_rate_dps),
                     "model_b_cross_pred_dps": pb,
@@ -434,17 +435,18 @@ def main() -> None:
     if not events:
         raise SystemExit("no events")
 
-    geom = RockerGeometry()
+    geom_a = RockerGeometry(cg_height_upright_m=0.120)
+    geom_b = RockerGeometry()
     by_side = {
         side: [e for e in events if e.prev_peak_side == side]
         for side in (-1, +1)
     }
 
     def ua(angle_deg: float) -> float:
-        return geom.complete_circle_potential_delta_j(radians(angle_deg), args.mass_kg)
+        return geom_a.complete_circle_potential_delta_j(radians(angle_deg), args.mass_kg)
 
     def ub(angle_deg: float) -> float:
-        return geom.potential_delta_j(radians(angle_deg), args.mass_kg)
+        return geom_b.potential_delta_j(radians(angle_deg), args.mass_kg)
 
     model_a = model_summary(by_side, ua)
     model_b = model_summary(by_side, ub)
@@ -455,12 +457,18 @@ def main() -> None:
         "n_events": len(events),
         "mass_kg": args.mass_kg,
         "geometry": {
-            "radius_m": geom.radius_m,
-            "inner_edge_x_m": geom.inner_edge_x_m,
-            "outer_edge_x_m": geom.outer_edge_x_m,
-            "cg_height_upright_m": geom.cg_height_upright_m,
-            "theta_inner_deg": degrees(geom.theta_inner_rad),
-            "theta_outer_deg": degrees(geom.theta_outer_rad),
+            "model_a_complete_circle": {
+                "radius_m": geom_a.radius_m,
+                "cg_height_upright_m": geom_a.cg_height_upright_m,
+            },
+            "model_b_step": {
+                "radius_m": geom_b.radius_m,
+                "inner_edge_x_m": geom_b.inner_edge_x_m,
+                "outer_edge_x_m": geom_b.outer_edge_x_m,
+                "cg_height_upright_m": geom_b.cg_height_upright_m,
+                "theta_inner_deg": degrees(geom_b.theta_inner_rad),
+                "theta_outer_deg": degrees(geom_b.theta_outer_rad),
+            },
         },
         "model_a_complete_circle_cross_rate": model_a,
         "model_b_step_geometry_cross_rate": model_b,
@@ -479,7 +487,8 @@ def main() -> None:
     write_event_predictions(
         args.out_dir / "event_predictions.csv",
         events,
-        geom,
+        geom_a,
+        geom_b,
         args.mass_kg,
         selected_maps,
         model_a,

@@ -33,13 +33,16 @@ py -m analysis.audit_free_decay data/v62_run2_107933178_imu_free_decay_events.cs
 ## Model A/B result
 
 Model A and Model B both predict zero-cross angular rate; the figures below are combined left/right RMSE in deg/s.
+Model A is fixed at its historical complete-circle height of 120 mm.  Model B
+uses the externally supported STEP height of 128 mm; the two heights are
+therefore no longer silently shared.
 
 | Run | Model A RMSE | Model B RMSE | Model A LOOCV | Model B LOOCV |
 |---|---:|---:|---:|---:|
-| V61 run 1 (102479546) | 8.675 | 4.710 | 11.313 | 6.069 |
-| V61 run 2 (156491989) | 6.866 | 3.125 | 8.629 | 3.961 |
-| V62 run 1 (58517125) | 7.777 | 4.071 | 9.946 | 5.259 |
-| V62 run 2 (107933178) | 6.071 | 3.046 | 7.675 | 3.740 |
+| V61 run 1 (102479546) | 8.675 | 4.158 | 11.313 | 5.214 |
+| V61 run 2 (156491989) | 6.866 | 2.647 | 8.629 | 3.215 |
+| V62 run 1 (58517125) | 7.777 | 3.308 | 9.946 | 4.206 |
+| V62 run 2 (107933178) | 6.071 | 2.931 | 7.675 | 3.421 |
 
 STEP Model B improves both in-sample and leave-one-out RMSE in every one of the four fixed event sets. This establishes a reproducible IMU-only baseline for that comparison.
 
@@ -49,10 +52,10 @@ The fitted Model B effective inertias (negative/positive previous-peak side) are
 
 | Run | J_eff negative (kg m^2) | J_eff positive (kg m^2) |
 |---|---:|---:|
-| V61 run 1 | 0.000993 | 0.001510 |
-| V61 run 2 | 0.001068 | 0.001450 |
-| V62 run 1 | 0.001157 | 0.001278 |
-| V62 run 2 | 0.001088 | 0.001407 |
+| V61 run 1 | 0.000785 | 0.001171 |
+| V61 run 2 | 0.000839 | 0.001122 |
+| V62 run 1 | 0.000900 | 0.000991 |
+| V62 run 2 | 0.000849 | 0.001086 |
 
 They remain side-asymmetric and vary between runs. The present data therefore supports separate run/side fits, but does not yet establish a single reproducible constant J_eff. Amplitude-dependent inertia and/or loss should remain open hypotheses.
 
@@ -67,3 +70,7 @@ The previously recorded V61 figures that mixed video-derived peak angles with IM
 ## Decision
 
 Step 1 is complete for the four locally available V61/V62 primary runs: fixed-rule event data, provenance, per-event predictions, and regenerated summaries are now versioned. No conclusion about Q reproducibility is justified from this passive-model audit alone. Before any V63 control change, collect low-amplitude free-decay data that crosses the 1.91-degree region and use the same extractor to test the contact boundary and J_eff/loss repeatability.
+
+The independent V55/V56/V58 external transfer audit is now published in
+`docs/v55_v56_v58_crossrun_model_b_audit_20260824.md`. It supports 128 mm as
+the Model-B operating standard, but does not replace this required passive test.

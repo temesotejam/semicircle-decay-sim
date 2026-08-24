@@ -2,6 +2,14 @@
 
 This directory is reserved for event-level data used to reproduce the passive Model A / Model B / empirical-map audit.
 
+## V55/V56/V58 Q-probe pre-command table
+
+`v55_v56_v58_qprobe_precommand_events.csv` is a separate, versioned external
+parameter-transfer dataset.  It has 54 states from nine runs and is **not** a
+passive free-decay event table.  Its adjacent JSON sidecar contains source
+hashes and extraction rules; reproduce its results with
+`analysis.audit_crossrun_qprobe_prestate` and the cross-run audit document.
+
 Do not copy arbitrary processed outputs here. Each CSV must be traceable to its source RWLOG, paired video (when present), extraction source, and rule.
 
 ## Required event CSV schema

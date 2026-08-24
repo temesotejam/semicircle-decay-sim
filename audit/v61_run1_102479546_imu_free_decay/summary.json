@@ -3,12 +3,18 @@
   "n_events": 11,
   "mass_kg": 0.1997,
   "geometry": {
-    "radius_m": 0.15,
-    "inner_edge_x_m": 0.005,
-    "outer_edge_x_m": 0.045,
-    "cg_height_upright_m": 0.12,
-    "theta_inner_deg": 1.9102131717099304,
-    "theta_outer_deg": 17.457603123722095
+    "model_a_complete_circle": {
+      "radius_m": 0.15,
+      "cg_height_upright_m": 0.12
+    },
+    "model_b_step": {
+      "radius_m": 0.15,
+      "inner_edge_x_m": 0.005,
+      "outer_edge_x_m": 0.045,
+      "cg_height_upright_m": 0.128,
+      "theta_inner_deg": 1.9102131717099304,
+      "theta_outer_deg": 17.457603123722095
+    }
   },
   "model_a_complete_circle_cross_rate": {
     "-1": {
@@ -29,18 +35,18 @@
   "model_b_step_geometry_cross_rate": {
     "-1": {
       "n": 6,
-      "J_eff_kg_m2": 0.0009931584693834547,
-      "rmse_dps": 6.104583892855963,
-      "loocv_rmse_dps": 7.884023739767887
+      "J_eff_kg_m2": 0.0007852858724441076,
+      "rmse_dps": 5.106295434535948,
+      "loocv_rmse_dps": 6.408031553908479
     },
     "1": {
       "n": 5,
-      "J_eff_kg_m2": 0.0015098393604498841,
-      "rmse_dps": 2.0234993470914584,
-      "loocv_rmse_dps": 2.5389765600093464
+      "J_eff_kg_m2": 0.0011706955343006801,
+      "rmse_dps": 2.5983454982195067,
+      "loocv_rmse_dps": 3.245208786773913
     },
-    "combined_rmse_dps": 4.710417999864252,
-    "combined_loocv_rmse_dps": 6.069139461516661
+    "combined_rmse_dps": 4.15826138306913,
+    "combined_loocv_rmse_dps": 5.213915913853595
   },
   "empirical_halfcycle_map": {
     "candidates": {

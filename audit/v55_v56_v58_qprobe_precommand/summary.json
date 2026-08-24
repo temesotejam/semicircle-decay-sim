@@ -1,0 +1,240 @@
+{
+  "analysis_name": "v55_v56_v58_qprobe_precommand_model_b_transfer_audit",
+  "analysis_scope": "V55/V56/V58 Q-probe pre-command states. These are not passive free-decay events and are used only as an external Model-B parameter-transfer check.",
+  "n_events": 54,
+  "n_runs": 9,
+  "mass_kg": 0.1997,
+  "fixed_v61_inertia_by_arrival_side_kg_m2": {
+    "-1": 0.000928,
+    "1": 0.000795
+  },
+  "fixed_height_results": {
+    "historical_h120": {
+      "height_m": 0.12,
+      "n_events": 54,
+      "rmse_dps": 7.373068660319902,
+      "bias_dps": 6.175247297620724
+    },
+    "model_b_h128": {
+      "height_m": 0.128,
+      "n_events": 54,
+      "rmse_dps": 3.5866768669774016,
+      "bias_dps": -1.3342317403664619
+    },
+    "comparison_h128345": {
+      "height_m": 0.128345,
+      "n_events": 54,
+      "rmse_dps": 3.7050277582542983,
+      "bias_dps": -1.6782765924236618
+    },
+    "global_optimum": {
+      "height_m": 0.12693236932697632,
+      "n_events": 54,
+      "rmse_dps": 3.4247931509816745,
+      "bias_dps": -0.2812447572084085
+    }
+  },
+  "height_fit_by_series": {
+    "V55": {
+      "height_m": 0.12702200273947678,
+      "n_events": 18,
+      "rmse_dps": 2.9814672656631815,
+      "bias_dps": -0.19582149539441612
+    },
+    "V56": {
+      "height_m": 0.12601889133777733,
+      "n_events": 18,
+      "rmse_dps": 3.4248898532476937,
+      "bias_dps": -0.3150551085420099
+    },
+    "V58": {
+      "height_m": 0.12766619446148902,
+      "n_events": 18,
+      "rmse_dps": 3.618247930732009,
+      "bias_dps": -0.2904456064992284
+    }
+  },
+  "height_fit_by_run": {
+    "V55_run1": {
+      "height_m": 0.12859525785334652,
+      "n_events": 6,
+      "rmse_dps": 2.6574195948445882,
+      "bias_dps": -0.14431952891196906
+    },
+    "V55_run2": {
+      "height_m": 0.12681033885017945,
+      "n_events": 6,
+      "rmse_dps": 2.7566943033340814,
+      "bias_dps": -0.25888760728337584
+    },
+    "V55_run3": {
+      "height_m": 0.12566549909189945,
+      "n_events": 6,
+      "rmse_dps": 2.9293496156753345,
+      "bias_dps": -0.20052454133631178
+    },
+    "V56_run1": {
+      "height_m": 0.12709244852544205,
+      "n_events": 6,
+      "rmse_dps": 3.9066454021500783,
+      "bias_dps": -0.20873190115021126
+    },
+    "V56_run2": {
+      "height_m": 0.12517615342550636,
+      "n_events": 6,
+      "rmse_dps": 2.4999503569125494,
+      "bias_dps": -0.16680574741112153
+    },
+    "V56_run3": {
+      "height_m": 0.12518328441344256,
+      "n_events": 6,
+      "rmse_dps": 3.315289682197416,
+      "bias_dps": -0.27748999656474166
+    },
+    "V58_run1": {
+      "height_m": 0.1268589200053673,
+      "n_events": 6,
+      "rmse_dps": 3.3538439183361852,
+      "bias_dps": -0.15124021915933264
+    },
+    "V58_run2": {
+      "height_m": 0.12872803252899556,
+      "n_events": 6,
+      "rmse_dps": 2.648225987069627,
+      "bias_dps": -0.04381997112664493
+    },
+    "V58_run3": {
+      "height_m": 0.1269742970467196,
+      "n_events": 6,
+      "rmse_dps": 4.267296900933039,
+      "bias_dps": -0.45924003731257085
+    }
+  },
+  "height_fit_by_run_distribution": {
+    "n_runs": 9,
+    "mean_m": 0.12678713686009987,
+    "median_m": 0.1268589200053673,
+    "population_stdev_m": 0.0012290915527210394,
+    "sample_stdev_m": 0.0013036484574422249,
+    "min_m": 0.12517615342550636,
+    "max_m": 0.12872803252899556
+  },
+  "leave_one_run_out_fixed_j": {
+    "V55_run1": {
+      "height_m": 0.12677152304569156,
+      "n_events": 6,
+      "rmse_dps": 3.110087702961968,
+      "bias_dps": 1.4653116464421518,
+      "fit_height_m": 0.12677152304569156
+    },
+    "V55_run2": {
+      "height_m": 0.126943076940579,
+      "n_events": 6,
+      "rmse_dps": 2.7589642631843825,
+      "bias_dps": -0.37005603350320015,
+      "fit_height_m": 0.126943076940579
+    },
+    "V55_run3": {
+      "height_m": 0.12705715208286,
+      "n_events": 6,
+      "rmse_dps": 3.1781870080943135,
+      "bias_dps": -1.4293223290695707,
+      "fit_height_m": 0.12705715208286
+    },
+    "V56_run1": {
+      "height_m": 0.1269038022736368,
+      "n_events": 6,
+      "rmse_dps": 3.9127254617509,
+      "bias_dps": 0.008918532591962958,
+      "fit_height_m": 0.1269038022736368
+    },
+    "V56_run2": {
+      "height_m": 0.1271087576839799,
+      "n_events": 6,
+      "rmse_dps": 3.0372652535265634,
+      "bias_dps": -1.8829112079437493,
+      "fit_height_m": 0.1271087576839799
+    },
+    "V56_run3": {
+      "height_m": 0.12713121857402854,
+      "n_events": 6,
+      "rmse_dps": 3.791041995158821,
+      "bias_dps": -2.1093516350840353,
+      "fit_height_m": 0.12713121857402854
+    },
+    "V58_run1": {
+      "height_m": 0.12693969598014604,
+      "n_events": 6,
+      "rmse_dps": 3.3546213046415136,
+      "bias_dps": -0.22330859594963925,
+      "fit_height_m": 0.12693969598014604
+    },
+    "V58_run2": {
+      "height_m": 0.1265837821815401,
+      "n_events": 6,
+      "rmse_dps": 3.696961146940912,
+      "bias_dps": 2.532740007311195,
+      "fit_height_m": 0.1265837821815401
+    },
+    "V58_run3": {
+      "height_m": 0.12692530919024375,
+      "n_events": 6,
+      "rmse_dps": 4.267654147731245,
+      "bias_dps": -0.4043087276992061,
+      "fit_height_m": 0.12692530919024375
+    }
+  },
+  "eventwise_model_b_effective_inertia_h128345": {
+    "height_m": 0.128345,
+    "n_events": 54,
+    "mean_kg_m2": 0.000815375069162909,
+    "median_kg_m2": 0.0008122053725696514,
+    "sample_stdev_kg_m2": 6.764278048955348e-05,
+    "min_kg_m2": 0.0006756949850769834,
+    "max_kg_m2": 0.0009708572195620058
+  },
+  "flexible_model_comparison": {
+    "model_a_complete_circle_h120": {
+      "height_m": 0.12,
+      "n_events": 54,
+      "by_arrival_side": {
+        "-1": {
+          "n_events": 27,
+          "J_eff_kg_m2": 0.0007868552281324671,
+          "rmse_dps": 4.75587417105863,
+          "bias_dps": -0.4881620621173118
+        },
+        "1": {
+          "n_events": 27,
+          "J_eff_kg_m2": 0.0007770278682800416,
+          "rmse_dps": 3.4665350074663457,
+          "bias_dps": -0.29536830453091084
+        }
+      },
+      "combined_rmse_dps": 4.161442303392678,
+      "combined_bias_dps": -0.3917651833241113
+    },
+    "model_b_step_h128345": {
+      "height_m": 0.128345,
+      "n_events": 54,
+      "by_arrival_side": {
+        "-1": {
+          "n_events": 27,
+          "J_eff_kg_m2": 0.0008246925258526319,
+          "rmse_dps": 3.0129935540652277,
+          "bias_dps": -0.12218998370232725
+        },
+        "1": {
+          "n_events": 27,
+          "J_eff_kg_m2": 0.0008065935680403658,
+          "rmse_dps": 2.15694823506407,
+          "bias_dps": -0.049230879975702635
+        }
+      },
+      "combined_rmse_dps": 2.620167537160994,
+      "combined_bias_dps": -0.08571043183901494
+    },
+    "relative_rmse_reduction": 0.3703703316936864
+  },
+  "interpretation_limit": "Fitted H is an external dynamic parameter transfer, not a direct measurement of physical CG height or a lossless free-decay model. Q-probe/rebuild/contact history can remain in each pre-command state."
+}

@@ -26,10 +26,14 @@ def test_piecewise_height_is_continuous_at_inner_transition() -> None:
 
 
 def test_real_geometry_energy_is_materially_higher_near_fixed_q_gate() -> None:
-    geom = RockerGeometry()
+    geom = RockerGeometry(cg_height_upright_m=0.120)
     theta = radians(6.5)
     mass_kg = 0.1997
     u_a = geom.complete_circle_potential_delta_j(theta, mass_kg)
     u_b = geom.potential_delta_j(theta, mass_kg)
     ratio = u_b / u_a
     assert 1.40 < ratio < 1.45
+
+
+def test_model_b_default_height_is_external_transfer_standard() -> None:
+    assert RockerGeometry().cg_height_upright_m == 0.128

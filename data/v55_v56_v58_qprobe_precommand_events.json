@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "analysis_scope": "V55/V56/V58 Q-probe pre-command states. These are not passive free-decay events and are used only as an external Model-B parameter-transfer check.",
+  "event_csv": {
+    "filename": "v55_v56_v58_qprobe_precommand_events.csv",
+    "sha256": "9ce7a9acbb4ec7178ebb49059dd3638eeb785dfa503fc1d96f4d421efd50b035",
+    "n_events": 54
+  },
+  "extraction_rule": {
+    "arrival_side": "requested_side, required equal to observed_side",
+    "h_prev_deg": "dynamic_H_prev_deg",
+    "zero_cross_rate_dps": "command_rate_bias_corrected_dps",
+    "rate_sign_check": "sign(rate) equals arrival_side",
+    "selection": "all six Q-probe rows from each of nine specified runs"
+  },
+  "sources": [
+    {
+      "series": "V55",
+      "run_id": "V55_run1",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "06fb10ad74fd5480f8c07c14458ff543755fbe953711bae6e13060d9beee86a8",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "8b3357486230c5d9413a2b63691cd8bf7bdff191b3a2651d8c16a6b8c1f7bb3a",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v54_reachability_log_only_v53_inverse_shadow"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V55",
+      "run_id": "V55_run2",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "d9cf1cc5596a1b99a86ae14b44de44e16e12256cb48488d863e2159f9469322d",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "5f565ead726fbf7ee2a45f956486fa76415ea03da5c6fe131e2d37241b98b149",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v54_reachability_log_only_v53_inverse_shadow"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V55",
+      "run_id": "V55_run3",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "9672a6ac51c4d57a4339ba1ae6dbd1d2671a1922ff9dcfa14b2bffc40286b116",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "8985d293d8ccbc8b2132ddd467a845a82763302a7b8e3cebe09253888d001123",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v54_reachability_log_only_v53_inverse_shadow"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V56",
+      "run_id": "V56_run1",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "571824abd597103eace116a1726539e9071094d946e813a406e8450933864cd3",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "e32d5ed44d48e71d43c3a185e7a3c2118fee1e2cc18c5446b5e9ecfe8fb1602c",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v54_reachability_log_only_v53_inverse_shadow"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V56",
+      "run_id": "V56_run2",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "6b646fb5f6fee6d57c07d6a06a3c8212f080ffd27ac6478452ce584d3f34533b",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "c498669fb2af658d58b809a86e959af1931e9b95d4f2958a65bbdcda72faf416",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v54_reachability_log_only_v53_inverse_shadow"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V56",
+      "run_id": "V56_run3",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "cce5ca2ef63b5b69d0376918ccb5427a7d0683665f3cb32bf47f73a97a58ec48",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "ad042486becba1e3fc6c3e0fa4e03bdbc9f0439feaf53e5db8771866b13b05a4",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v54_reachability_log_only_v53_inverse_shadow"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V58",
+      "run_id": "V58_run1",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "4255a3c07085efe0a96c398ed8b9e21b38c1a606a5abffbdcd74bdb0ce6d23bf",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "e81d9b2f51b1db906773633ece1271c332d185b03fc6b6d6dee68032fdaf5f2c",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v58_inverse_q_repeatability_state_gate_v51_video_hfree"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V58",
+      "run_id": "V58_run2",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "9ae0265e16c9270761540cd5b4b52513fab29dd7be2876f65279ed6879342045",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "a054f7c8d3b83be3358cc62ebd21cbd40e1b87736aeec9fa505e3a15a959630b",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v58_inverse_q_repeatability_state_gate_v51_video_hfree"
+      },
+      "n_events": 6
+    },
+    {
+      "series": "V58",
+      "run_id": "V58_run3",
+      "event_csv_filename": "v49_qprobe_half_range_comparison.csv",
+      "event_csv_sha256": "0fa097444790258eb6c06f4896bceb8694d01b1736db0cc9abc08f4aed416c4b",
+      "metadata_filename": "metadata.json",
+      "metadata_sha256": "6577ae7fd4a85f2b3eaa89fe30a85318e19be52ecb5dc3a7ef283eec4558de72",
+      "metadata_identity": {
+        "format": "rwlog_dynamic_beta_vbat_hold_time_compare",
+        "format_version": 41,
+        "calibration_algorithm_revision": "v58_inverse_q_repeatability_state_gate_v51_video_hfree"
+      },
+      "n_events": 6
+    }
+  ]
+}

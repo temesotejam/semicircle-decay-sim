@@ -3,12 +3,18 @@
   "n_events": 11,
   "mass_kg": 0.1997,
   "geometry": {
-    "radius_m": 0.15,
-    "inner_edge_x_m": 0.005,
-    "outer_edge_x_m": 0.045,
-    "cg_height_upright_m": 0.12,
-    "theta_inner_deg": 1.9102131717099304,
-    "theta_outer_deg": 17.457603123722095
+    "model_a_complete_circle": {
+      "radius_m": 0.15,
+      "cg_height_upright_m": 0.12
+    },
+    "model_b_step": {
+      "radius_m": 0.15,
+      "inner_edge_x_m": 0.005,
+      "outer_edge_x_m": 0.045,
+      "cg_height_upright_m": 0.128,
+      "theta_inner_deg": 1.9102131717099304,
+      "theta_outer_deg": 17.457603123722095
+    }
   },
   "model_a_complete_circle_cross_rate": {
     "-1": {
@@ -29,18 +35,18 @@
   "model_b_step_geometry_cross_rate": {
     "-1": {
       "n": 6,
-      "J_eff_kg_m2": 0.0010684248101130792,
-      "rmse_dps": 3.516249940702051,
-      "loocv_rmse_dps": 4.381882200750319
+      "J_eff_kg_m2": 0.0008386823640724713,
+      "rmse_dps": 2.9080701575223795,
+      "loocv_rmse_dps": 3.4744927662182867
     },
     "1": {
       "n": 5,
-      "J_eff_kg_m2": 0.0014499733073882856,
-      "rmse_dps": 2.5776440124439843,
-      "loocv_rmse_dps": 3.3880645069559536
+      "J_eff_kg_m2": 0.0011215652653276443,
+      "rmse_dps": 2.293848032269678,
+      "loocv_rmse_dps": 2.8731511405894588
     },
-    "combined_rmse_dps": 3.1247592655982706,
-    "combined_loocv_rmse_dps": 3.9611781448084376
+    "combined_rmse_dps": 2.6466089147189984,
+    "combined_loocv_rmse_dps": 3.215128829291742
   },
   "empirical_halfcycle_map": {
     "candidates": {
