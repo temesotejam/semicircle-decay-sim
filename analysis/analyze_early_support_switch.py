@@ -15,6 +15,11 @@ from __future__ import annotations
 import argparse
 import csv
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from model.leg_kinematics import LegGeometry
 from model.passive_swing import interpolate_state_at_q, simulate_until_stop, uniform_step_proxy
@@ -61,7 +66,7 @@ def main():
             writer.writeheader()
             writer.writerows(rows)
     else:
-        writer = csv.DictWriter(__import__("sys").stdout, fieldnames=fields)
+        writer = csv.DictWriter(sys.stdout, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
 
