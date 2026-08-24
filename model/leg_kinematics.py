@@ -17,7 +17,7 @@ hardware/video before calling q increasing/decreasing "forward" or "backward".
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import atan2, cos, hypot, radians, sin, degrees
+from math import atan2, cos, degrees, hypot, radians, sin
 
 
 @dataclass(frozen=True)
@@ -76,11 +76,45 @@ class LegGeometry:
     def ankle_position_mm(self, q_deg: float) -> tuple[float, float]:
         return self.rotate_yz(self.ankle_y_mm, self.ankle_z_mm, q_deg)
 
+    def ankle_y_displacement_mm(self, q_deg: float, reference_q_deg: float = 0.0) -> float:
+        """Signed STEP-Y displacement of the ankle center from a reference pose."""
+        y, _ = self.ankle_position_mm(q_deg)
+        y_ref, _ = self.ankle_position_mm(reference_q_deg)
+        return y - y_ref
+
+    def ankle_travel_from_qmax_mm(self, q_deg: float) -> float:
+        """Unsigned ankle-center travel from the q=0 hard stop.
+
+        This is a geometry-only stride coordinate.  It is not yet the true
+        ground-contact step length because the foot can first contact at its
+        front/rear edge when body fore-aft pitch is nonzero.
+        """
+        if not self.within_hard_stops(q_deg):
+            raise ValueError(f"q={q_deg} deg is outside [{self.q_min_deg}, {self.q_max_deg}]")
+        return abs(self.ankle_y_displacement_mm(q_deg, self.q_max_deg))
+
     @property
     def ankle_y_travel_mm(self) -> float:
-        y0, _ = self.ankle_position_mm(self.q_max_deg)
-        y1, _ = self.ankle_position_mm(self.q_min_deg)
-        return abs(y0 - y1)
+        return self.ankle_travel_from_qmax_mm(self.q_min_deg)
+
+    def stride_fraction_from_qmax(self, q_deg: float) -> float:
+        """0..1 fraction of the maximum ankle-center travel."""
+        return self.ankle_travel_from_qmax_mm(q_deg) / self.ankle_y_travel_mm
+
+    def q_for_ankle_travel_mm(self, travel_mm: float) -> float:
+        """Invert the monotone q=0 -> q_min ankle-center travel relation."""
+        if travel_mm < 0.0 or travel_mm > self.ankle_y_travel_mm:
+            raise ValueError(
+                f"travel={travel_mm} mm is outside [0, {self.ankle_y_travel_mm}]"
+            )
+        lo, hi = self.q_min_deg, self.q_max_deg
+        for _ in range(70):
+            mid = (lo + hi) / 2.0
+            if self.ankle_travel_from_qmax_mm(mid) > travel_mm:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2.0
 
     def within_hard_stops(self, q_deg: float, tolerance_deg: float = 1e-9) -> bool:
         return self.q_min_deg - tolerance_deg <= q_deg <= self.q_max_deg + tolerance_deg
