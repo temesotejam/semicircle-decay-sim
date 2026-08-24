@@ -1,0 +1,10 @@
+q_new_deg,roll_deg,common_step_y_shift_mm,uniform_step_proxy_cg_z_mm,new_foot_state,old_foot_state
+-10.00,13.548,0.000,104.997,front-edge first contact,old foot touching
+-8.75,12.776,-1.882,104.903,edge settling,old foot contact boundary
+-7.50,11.894,-3.752,104.802,edge settling,old foot contact boundary
+-6.25,10.879,-5.608,104.694,edge settling,old foot contact boundary
+-5.00,9.695,-7.450,104.580,edge settling,old foot contact boundary
+-3.75,8.283,-9.276,104.461,edge settling,old foot contact boundary
+-2.50,6.527,-11.086,104.340,edge settling,old foot contact boundary
+-1.25,4.136,-12.880,104.226,nearly flat,old foot contact boundary
+0.00,0.000,-14.655,104.089,longitudinal sole flat,both feet equal-height boundary
