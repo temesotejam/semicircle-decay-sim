@@ -1,0 +1,111 @@
+{
+  "input_csv": "data\\v61_run2_156491989_imu_free_decay_events.csv",
+  "n_events": 11,
+  "mass_kg": 0.1997,
+  "geometry": {
+    "radius_m": 0.15,
+    "inner_edge_x_m": 0.005,
+    "outer_edge_x_m": 0.045,
+    "cg_height_upright_m": 0.12,
+    "theta_inner_deg": 1.9102131717099304,
+    "theta_outer_deg": 17.457603123722095
+  },
+  "model_a_complete_circle_cross_rate": {
+    "-1": {
+      "n": 6,
+      "J_eff_kg_m2": 0.0008684536765624358,
+      "rmse_dps": 8.176257713749282,
+      "loocv_rmse_dps": 10.060462814535644
+    },
+    "1": {
+      "n": 5,
+      "J_eff_kg_m2": 0.0012346511762053774,
+      "rmse_dps": 4.847623336622382,
+      "loocv_rmse_dps": 6.508915225628664
+    },
+    "combined_rmse_dps": 6.866283904827979,
+    "combined_loocv_rmse_dps": 8.629270270043538
+  },
+  "model_b_step_geometry_cross_rate": {
+    "-1": {
+      "n": 6,
+      "J_eff_kg_m2": 0.0010684248101130792,
+      "rmse_dps": 3.516249940702051,
+      "loocv_rmse_dps": 4.381882200750319
+    },
+    "1": {
+      "n": 5,
+      "J_eff_kg_m2": 0.0014499733073882856,
+      "rmse_dps": 2.5776440124439843,
+      "loocv_rmse_dps": 3.3880645069559536
+    },
+    "combined_rmse_dps": 3.1247592655982706,
+    "combined_loocv_rmse_dps": 3.9611781448084376
+  },
+  "empirical_halfcycle_map": {
+    "candidates": {
+      "-1": [
+        {
+          "kind": "proportional",
+          "r": 1.0899561248225562,
+          "c_deg": 0.0,
+          "support_min_deg": 4.11,
+          "support_max_deg": 12.78,
+          "loocv_rmse_deg": 0.45602900999435936,
+          "valid_halfcycle": true
+        },
+        {
+          "kind": "affine",
+          "r": 0.9961638333904564,
+          "c_deg": 0.862630924816699,
+          "support_min_deg": 4.11,
+          "support_max_deg": 12.78,
+          "loocv_rmse_deg": 0.3825911412212914,
+          "valid_halfcycle": true
+        }
+      ],
+      "1": [
+        {
+          "kind": "proportional",
+          "r": 0.7466980775090469,
+          "c_deg": 0.0,
+          "support_min_deg": 6.24,
+          "support_max_deg": 13.81,
+          "loocv_rmse_deg": 0.4677004641462515,
+          "valid_halfcycle": true
+        },
+        {
+          "kind": "affine",
+          "r": 0.8722504895359973,
+          "c_deg": -1.3098957367503088,
+          "support_min_deg": 6.24,
+          "support_max_deg": 13.81,
+          "loocv_rmse_deg": 0.1268258633899207,
+          "valid_halfcycle": true
+        }
+      ]
+    },
+    "selected": {
+      "-1": {
+        "kind": "affine",
+        "r": 0.9961638333904564,
+        "c_deg": 0.862630924816699,
+        "support_min_deg": 4.11,
+        "support_max_deg": 12.78,
+        "loocv_rmse_deg": 0.3825911412212914,
+        "valid_halfcycle": true
+      },
+      "1": {
+        "kind": "affine",
+        "r": 0.8722504895359973,
+        "c_deg": -1.3098957367503088,
+        "support_min_deg": 6.24,
+        "support_max_deg": 13.81,
+        "loocv_rmse_deg": 0.1268258633899207,
+        "valid_halfcycle": true
+      }
+    },
+    "selection_rule": "positive monotone proportional/affine half-cycle candidates; both composed full cycles must satisfy 0<F(A)<A over their composition domains; choose lowest mean LOOCV RMSE; no extrapolation"
+  },
+  "metric_warning": "Model A/B RMSE target zero-cross rate [deg/s]; empirical-map RMSE target next-peak amplitude [deg]. Do not rank these numeric RMSEs directly."
+}
