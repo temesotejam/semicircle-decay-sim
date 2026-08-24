@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reaction-Wheel Rocker — Mechanism Motion Explorer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">semicircle-decay-sim / mechanism-kinematics-audit-v1</p>
+      <h1>機構動作エクスプローラ</h1>
+      <p class="lead">STEPから確定した股関節軸・20°ハードストップ・足首中心移動量と、現在の接地境界を分けて可視化します。</p>
+    </div>
+    <div class="status-card">
+      <span class="status-dot"></span>
+      <div><b>Current model</b><br><span>Geometry audit + screening dynamics</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="mode-bar" aria-label="motion modes">
+      <button class="mode active" data-mode="passive">① 遊脚単独</button>
+      <button class="mode" data-mode="roll">② 左右ロール</button>
+      <button class="mode" data-mode="full">③ 最大歩幅</button>
+      <button class="mode" data-mode="early">④ 早期支持切替</button>
+    </section>
+
+    <section class="control-card">
+      <div class="transport">
+        <button id="playBtn" class="primary">▶ 再生</button>
+        <button id="resetBtn">↺ リセット</button>
+        <label>速度
+          <select id="speedSelect">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+          </select>
+        </label>
+      </div>
+      <div class="control-grid">
+        <label id="stepControl">目標足首移動 <b><span id="stepValue">10.0</span> mm</b>
+          <input id="stepSlider" type="range" min="1" max="20.5" value="10" step="0.1" />
+        </label>
+        <label id="stanceControl">支持脚角 <b><span id="stanceValue">-20.0</span>°</b>
+          <input id="stanceSlider" type="range" min="-20" max="0" value="-20" step="0.5" />
+        </label>
+        <label class="check"><input id="cgToggle" type="checkbox" checked /> 形状重心proxyを表示</label>
+      </div>
+    </section>
+
+    <section class="metrics" id="metrics"></section>
+
+    <section class="views">
+      <article class="view-card">
+        <div class="view-head">
+          <div><span class="view-label">SIDE / YZ</span><h2>脚の前後スイング</h2></div>
+          <span class="badge" id="sideBadge">PASSIVE</span>
+        </div>
+        <canvas id="sideCanvas"></canvas>
+        <p class="caption">股関節はSTEP X軸回り。膝・足首は固定なので脚＋足を1剛体として描画。</p>
+      </article>
+
+      <article class="view-card">
+        <div class="view-head">
+          <div><span class="view-label">FRONT / XZ</span><h2>本体ロールと接地切替</h2></div>
+          <span class="badge" id="frontBadge">ROLL</span>
+        </div>
+        <canvas id="frontCanvas"></canvas>
+        <p class="caption">ロールはSTEP Y軸回り。接地表示は現在のSTEP足形状から得た初回床接触境界に基づく。</p>
+      </article>
+    </section>
+
+    <section class="timeline-card">
+      <div class="timeline-head"><h2>動作フェーズ</h2><span id="phaseText">遊脚を解放</span></div>
+      <div class="timeline"><div id="timelineFill"></div><div id="timelineCursor"></div></div>
+      <div class="phase-grid" id="phaseGrid"></div>
+    </section>
+
+    <section class="explain-grid">
+      <article>
+        <h3>① 遊脚単独</h3>
+        <p>一様密度STEP形状proxyで、q=0°から−20°ストッパまで重力で振れる方向と時間スケールを表示します。95.7 msは物理確定値ではありません。</p>
+      </article>
+      <article>
+        <h3>② 左右ロール</h3>
+        <p>脚角を固定し、本体だけを左右へロールさせます。リアクションホイールが直接作る主運動はこちらです。</p>
+      </article>
+      <article>
+        <h3>③ 最大歩幅</h3>
+        <p>遊脚を−20°ストッパまで振り切ってから接地させる基準動作。足首中心の最大移動は20.904 mmです。</p>
+      </article>
+      <article>
+        <h3>④ 早期支持切替</h3>
+        <p>遊脚がストッパへ到達する前にロールを反転させ、STEP接地境界へ持っていくことで短い歩幅を選ぶ現在の制御仮説です。</p>
+      </article>
+    </section>
+
+    <section class="note">
+      <strong>今はまだ入れていないもの:</strong>
+      実測脚質量・股関節摩擦・足衝突反発・床摩擦・接地後の荷重移動・機体前後傾斜の時間変化。したがって「床に触れられる」と「確実に支持脚になる」は別に表示しています。
+    </section>
+  </main>
+
+  <footer>
+    <span>Geometry source: Part Studio 1.1.step</span>
+    <a href="https://github.com/temesotejam/semicircle-decay-sim/pull/3">Draft PR #3</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

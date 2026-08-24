@@ -1,0 +1,51 @@
+{
+  "warning": "Equal-density STEP volume proxy only; do not use as final physical mass/CG/inertia without measured component masses.",
+  "hip_axis_yz_mm": [0.0, -12.0],
+  "left_parts": {
+    "upper": {
+      "volume_mm3": 10278.611545764617,
+      "cg_rel_hip_y_mm": 21.438205116691943,
+      "cg_rel_hip_z_mm": -12.37735349506449,
+      "cg_radius_mm": 24.754706990129,
+      "cg_angle_from_down_vertical_deg": 60.000000000000036,
+      "ix_cm_per_mass_mm2": 362.8174093128877,
+      "ix_hip_per_mass_mm2": 975.6129274800294
+    },
+    "lower": {
+      "volume_mm3": 8030.6902972536545,
+      "cg_rel_hip_y_mm": 28.334479202716246,
+      "cg_rel_hip_z_mm": -39.11550226819084,
+      "cg_radius_mm": 48.29974357470236,
+      "cg_angle_from_down_vertical_deg": 35.91881252841893,
+      "ix_cm_per_mass_mm2": 283.79985579979615,
+      "ix_hip_per_mass_mm2": 2616.665085181798
+    },
+    "foot": {
+      "volume_mm3": 4433.595969108349,
+      "cg_rel_hip_y_mm": 11.227384538890389,
+      "cg_rel_hip_z_mm": -74.98669362285189,
+      "cg_radius_mm": 75.82254535473977,
+      "cg_angle_from_down_vertical_deg": 8.515356738029842,
+      "ix_cm_per_mass_mm2": 237.90218792832948,
+      "ix_hip_per_mass_mm2": 5986.9605719999
+    },
+    "leg_plus_foot": {
+      "volume_mm3": 22742.89781212658,
+      "cg_rel_hip_y_mm": 21.88279175285118,
+      "cg_rel_hip_z_mm": -34.02412489617628,
+      "cg_radius_mm": 40.45364816489675,
+      "cg_angle_from_down_vertical_deg": 32.74730698324174,
+      "ix_cm_per_mass_mm2": 895.5164297219243,
+      "ix_hip_per_mass_mm2": 2532.0140795711786
+    }
+  },
+  "passive_swing_screening": {
+    "q_range_deg": [-20.0, 0.0],
+    "gravity_torque_points_toward_qmin_over_entire_range_at_zero_body_pitch": true,
+    "gravity_torque_zero_at_qmin_body_pitch_deg": -12.74730698324174,
+    "frictionless_energy_reachability_body_pitch_limit_deg": -22.74730698324174,
+    "zero_pitch_frictionless_q0_to_qmin_time_ms": 95.69775169815246,
+    "zero_pitch_frictionless_preimpact_qdot_dps": -371.6745025669435,
+    "interpretation": "The whole leg+foot equal-density shape proxy strongly biases gravity toward q=-20 deg. The literal foot solid alone has only an 8.515 deg CG offset and would not by itself have enough gravitational potential to reach q=-20 from rest at q=0; the relevant passive body is the entire rigid leg+foot assembly, not the foot solid alone."
+  }
+}
