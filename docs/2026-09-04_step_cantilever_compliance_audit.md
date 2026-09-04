@@ -17,8 +17,10 @@ Recovered geometry relevant to lateral bending:
 - radial thin-shell thickness: `t = 1.5 mm`
 - width along rocker axis Y: `b = 56 mm`
 - inner contact edge: `|X| = 5 mm`
-- reinforced/root transition: approximately `|X| = 37 mm`
-- thin free arc from inner edge to root: `L0 = 32.385 mm`
+- brace/inner-surface boundary: **`|X| = 37 mm`**
+- thin free arc from inner edge to that boundary: `L0 = 32.385 mm`
+
+The STEP inner cylindrical face has an exact boundary at `X=37 mm` over the central `Y=6.727...15.727 mm` band (9 mm wide).  This is why `X=37 mm` is used as the primary geometry value.  The rest of the 56 mm-wide shell makes the true 3-D load path plate/shell-like rather than a perfect 1-D beam, so nearby effective-root positions are only a sensitivity test.
 
 The thin strip second moment used for the screening beam is
 
@@ -65,7 +67,7 @@ There are 11 free-decay transitions.  Video supplies peak angle and RWLOG gyro s
 
 As in the earlier Model-A/B audit, one rate/energy scale is fitted separately for each peak side.  Model C2 additionally fits one shared `E_eff`.
 
-### Result at STEP root x=37 mm
+### Result at the actual STEP brace boundary x=37 mm
 
 | model | in-sample rate RMSE [deg/s] | LOO RMSE [deg/s] |
 |---|---:|---:|
@@ -76,7 +78,7 @@ Best in-sample C2 modulus:
 
 `E_eff = 12.04 GPa`.
 
-The in-sample improvement is only about `3.0%`, while leave-one-out error becomes about `1.0% worse` than rigid Model B.  Therefore the small in-sample reduction is not a robust predictive improvement.
+The in-sample improvement is only about `3.0%`, while leave-one-out error becomes about `1.0% worse` than rigid Model B.  Therefore the small in-sample reduction at the actual STEP boundary is not a robust predictive improvement.
 
 ### Fixed-E sensitivity
 
@@ -93,19 +95,19 @@ The in-sample improvement is only about `3.0%`, while leave-one-out error become
 
 A polymer-scale soft assumption around 1--3 GPa is substantially worse; for example the same endpoint screening gives about `3.83 deg/s` at 2 GPa, versus `2.64 deg/s` for rigid Model B.
 
-### Root-transition sensitivity
+### Effective-root sensitivity
 
-The exact onset of reinforcement was varied to avoid over-interpreting `x=37 mm`.
+To test the effect of the 3-D shell/load-spreading approximation, the effective root was varied around the exact STEP brace boundary.
 
-| root X [mm] | fitted E_eff [GPa] | in-sample RMSE [deg/s] | LOO RMSE [deg/s] |
+| effective root X [mm] | fitted E_eff [GPa] | in-sample RMSE [deg/s] | LOO RMSE [deg/s] |
 |---:|---:|---:|---:|
-| 35 | 6.51 | 2.473 | 3.477 |
-| 36 | 8.77 | 2.522 | 3.418 |
-| 37 | 12.04 | 2.560 | 3.367 |
+| 35 | 6.51 | 2.473 | **3.276** |
+| 36 | 8.77 | 2.522 | 3.402 |
+| **37 (STEP boundary)** | **12.04** | **2.560** | **3.367** |
 | 38 | 16.95 | 2.588 | 3.351 |
 | 39 | 24.72 | 2.609 | 3.379 |
 
-Changing the assumed root can improve the training residual, but **none** of these cases beats Model-B LOO RMSE `3.333 deg/s`.
+A hypothetical `35 mm` effective root gives a small LOO improvement (`3.276` vs `3.333 deg/s`, about 1.7%).  However `35 mm` is not the STEP brace-contact boundary; `37 mm` is.  This sensitivity indicates that a more realistic 3-D shell/plate load path could be worth testing, but the present 1-D cantilever model does not justify changing Model B.
 
 ## Historical data set 2: 2026-08-28 passive periods
 
@@ -122,11 +124,11 @@ This is a secondary screen because manual release velocity was not exactly presc
 | C2, E=50 GPa | 0.02908 | `8.5908e-4` |
 | C2, E=100 GPa | 0.02644 | `8.4975e-4` |
 
-The period data also drive the model toward the rigid limit.  No finite soft-compliance case tested improves on Model B.
+The period data drive the model toward the rigid limit.  No finite soft-compliance case tested at the actual `37 mm` boundary improves on Model B.
 
 ## What the fitted scale means physically
 
-At the V61 best-fit `E_eff = 12.04 GPa` and root `x=37 mm`:
+At the V61 best-fit `E_eff = 12.04 GPa` and the actual root `x=37 mm`:
 
 - inner-edge equivalent vertical stiffness per foot: `16.75 kN/m`
 - half-body-weight inner-edge deflection: `0.0585 mm`
@@ -140,14 +142,15 @@ Thus the historical data prefer an effective load path much stiffer than the ear
 ## Interpretation
 
 1. The STEP observation is still correct: the 1.5 mm rocker shell is geometrically the most compliant-looking region and its free length changes strongly with contact position.
-2. However, treating that shell as a free straight cantilever with ordinary polymer-scale modulus overpredicts its effect on the measured passive rocking dynamics.
-3. A fitted high effective stiffness can represent curvature/shell action, reinforced load transfer, print orientation, distributed contact, neighboring structure, and the fact that the real load path is not a free rectangular beam.
-4. The V61 data give a tiny in-sample gain but no cross-validated gain; the independent 2026-08-28 period screen is worse for every tested finite compliance.
-5. Therefore **rigid Model B remains the best passive baseline**.  Do not put this C2 compliance into the control simulator as the default physics yet.
-6. Real foot flexibility may still matter through non-conservative mechanisms that this conservative screen cannot capture: contact timing, local impact, hysteresis, slip, print damping, left/right stiffness differences, and transient deformation during RW input.
+2. The exact STEP brace boundary is at `X=37 mm`, but it is only part of a 3-D shell/brace load path; a 1-D beam is therefore an approximation.
+3. At the actual 37 mm geometry, adding conservative compliance slightly improves training fit but worsens cross-validation, while the independent 2026-08-28 period screen also gets worse.
+4. A fitted high effective stiffness can represent curvature/shell action, reinforced load transfer, print orientation, distributed contact, neighboring structure, and the fact that the real load path is not a free rectangular beam.
+5. A 35 mm *effective* root gives a tiny cross-validated gain, which suggests that 3-D load spreading deserves a more realistic shell model if we continue this direction; it is not enough evidence to replace Model B.
+6. Therefore **rigid Model B remains the best passive baseline**.  Do not put C2 into the reaction-wheel control simulator as the default physics yet.
+7. Real foot flexibility may still matter through non-conservative mechanisms that this conservative screen cannot capture: contact timing, local impact, hysteresis, slip, print damping, left/right stiffness differences, and transient deformation during RW input.
 
 ## Decision
 
 Keep Model B as the current baseline.
 
-Use C2 only as a sensitivity model until direct static loading or video deformation measurement provides an independent stiffness/hysteresis value.  If direct measurement later finds large deformation, the next model should include measured hysteresis/contact timing rather than forcing passive peak-rate data to identify a conservative beam spring.
+Keep C2 as a sensitivity model.  The next useful validation, if foot flexibility is pursued, is either direct static/video stiffness measurement or a 3-D shell/plate reduced model that respects the partial 9 mm brace attachment seen in STEP.  Do not force the passive data to identify a large conservative beam deformation that cross-validation does not support.
