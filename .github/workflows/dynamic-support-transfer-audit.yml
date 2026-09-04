@@ -22,3 +22,5 @@ jobs:
           python-version: '3.12'
       - name: Run dynamic support-transfer audit
         run: python analysis/evaluate_dynamic_support_transfer.py
+      - name: Mark audit completion
+        run: echo "dynamic support-transfer audit completed"
