@@ -286,7 +286,7 @@ def fit_period_dynamic(rows):
     best = None
     for start_deg in TRANSFER_GRID_DEG:
         for tau_s in TAU_GRID_S:
-            model = DynamicSupportTransfer(math.radians(start_deg), tau_s)
+            model = DynamicSupportTransfer(transfer_start_rad=math.radians(start_deg), transfer_tau_s=tau_s)
             j, rmse = fit_period_j(rows, model, iterations=12)
             cand = (rmse, start_deg, tau_s, j)
             if best is None or cand[0] < best[0]:
@@ -299,11 +299,11 @@ def main():
     periods = load_periods()
 
     rigid_loss, rigid_js = fit_rigid(rows)
-    rigid_model = DynamicSupportTransfer(0.0, 0.0)
+    rigid_model = DynamicSupportTransfer(transfer_start_rad=0.0, transfer_tau_s=0.0)
     rigid_m = metrics(rows, rigid_model, rigid_js)
 
     dyn_loss, start_deg, tau_s, dyn_js = fit_dynamic(rows)
-    dyn_model = DynamicSupportTransfer(math.radians(start_deg), tau_s)
+    dyn_model = DynamicSupportTransfer(transfer_start_rad=math.radians(start_deg), transfer_tau_s=tau_s)
     dyn_m = metrics(rows, dyn_model, dyn_js)
 
     print("V61 peak -> zero-cross joint rate/time fit")
