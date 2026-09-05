@@ -1,0 +1,35 @@
+{
+  "run_id": "v61_run1_102479546_imu_free_decay",
+  "source_rwlog": {
+    "basename": "dynamic_beta_holdcompare_zerocross_run_1_102479546.rwlog",
+    "bytes": 173889,
+    "sha256": "957596F7D5C1716F21D1FD8A42425E5E21F921B94A8847FFC22DC1053321AF9D"
+  },
+  "source_video": {
+    "basename": "WIN_20260824_12_11_09_Pro.mp4",
+    "bytes": 28529735,
+    "sha256": "DFC66842092BAEA4F64D3721E1FA1C44E4089D388F6BDB01A3D52E71D8325A7D"
+  },
+  "converted_rwlog_metadata": {
+    "basename": "metadata.json",
+    "bytes": 45672,
+    "sha256": "87D839948768D7893EBD43312F27B44A8D26D79D2ED9B3221F93FE076B159205"
+  },
+  "converted_rwlog_timeseries": {
+    "basename": "timeseries.csv",
+    "bytes": 413637,
+    "sha256": "C781D561E83502CC5AEEF6C085C46FA4514E83C691D3EAE8C0C70A9B5686D858"
+  },
+  "sync_method": "Numerical extraction is RWLOG-internal (no cross-device synchronization); the paired video is retained in provenance only, and its angle values are not mixed into this IMU-only event table.",
+  "peak_source": "calibration_peak_events with phase=1, using peak_signed_dynamic_hold073_deg at candidate_peak_ms",
+  "zero_cross_rate_source": "gyro_pitch_rate_dps linearly interpolated across the first pitch_dynamic_hold073_deg sign-change bracket between each consecutive free-decay peak pair",
+  "event_extraction_revision": "rwlog_free_decay_peak_to_interpolated_zero_cross_v1",
+  "q_free_only": true,
+  "selection_rule": "use every consecutive phase=1 peak pair only; require alternating peak sides, an angle-sign-change bracket inside the candidate-peak time window, and rate sign equal to the next peak side; reject rather than silently substitute nearest samples",
+  "event_count": 11,
+  "event_time_bounds_ms": {
+    "first_prev_peak": 5588.0,
+    "last_next_peak": 9948.0
+  },
+  "notes": "Initial excitation precedes this segment but is excluded. This table is passive free-decay after the final initial-build-up peak; it is not a Q-probe or post-rebuild table."
+}
